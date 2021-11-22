@@ -13,7 +13,7 @@ class RedisOperator(object):
         return [s.decode('utf-8') for s in tmp]
 
     def puts(self, proxies):
-        return self.connection.spop(REDIS_NAME, *proxies)
+        return self.connection.sadd(REDIS_NAME, *proxies)
 
     def pop(self):
         return self.connection.spop(REDIS_NAME).decode('utf-8')

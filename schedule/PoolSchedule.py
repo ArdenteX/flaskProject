@@ -38,8 +38,10 @@ class ProxiesCountProcess(Process):
         self._cycle = cycle
 
     def run(self):
+        print("Proxies Count Process Is Working....")
         pool_adder = PoolAdder()
         redis_pool = RedisOperator()
+        print("Pool Size: ", redis_pool.size)
         while True:
             if redis_pool.size < self._low_threshold:
                 pool_adder.add_to_pool()

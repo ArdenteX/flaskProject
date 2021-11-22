@@ -16,15 +16,18 @@ class UsabilityTester(object):
     async def _test_single_proxy(self, proxy):
         async with aiohttp.ClientSession() as session:
             real_proxy = 'http://' + proxy
+            error_count = 0
             try:
                 async with session.get(url=test_api, proxy=real_proxy, timeout=15) as resp:
                     self._usable_proxies.append(real_proxy)
             except Exception:
-                print(Exception.__name__)
+                error_count += 1
+                print(real_proxy, 'unusable... ', Exception.__name__, " ... ", error_count)
 
     def tester(self):
         print("Tester is working")
         tasks = [self._test_single_proxy(proxy) for proxy in self.raw_proxies]
+        print("proxy's number = ", len(tasks))
         asyncio.run(asyncio.wait(tasks))
 
     @property

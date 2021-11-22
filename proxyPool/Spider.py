@@ -30,6 +30,7 @@ class Daili666Spider(metaclass=SpiderGen):
     start_url = 'http://www.66ip.cn/{}.html'
 
     def gets(self, page_total=3):
+        print("daili666 crawl is working")
         urls = [self.start_url.format(i)
                 for i in range(self.count, self.count + page_total)]
         self._plus(page_total)
@@ -50,17 +51,22 @@ class XiLaProxySpider(metaclass=SpiderGen):
     start_url = 'http://www.xiladaili.com/gaoni/{}/'
 
     def gets(self, page_total=3):
+        print("xila crawl is working")
         urls = [self.start_url.format(i) for i in range(self.count, self.count + page_total)]
         self._plus(page_total)
         ans = []
         for url in urls:
-            soup = get_page(url)
-            proxy_list = soup.find('table', {"class": 'fl-table'}).find('tbody')
+            try:
+                time.sleep(1)
+                soup = get_page(url)
+                proxy_list = soup.find('table', {"class": 'fl-table'}).find('tbody')
 
-            for proxy in proxy_list.find_all('tr'):
-                tmp = proxy.find_all('td')
-                ip_port = tmp[0].get_text().split(':')
-                ans.append(':'.join([ip_port[0], ip_port[1]]))
+                for proxy in proxy_list.find_all('tr'):
+                    tmp = proxy.find_all('td')
+                    ip_port = tmp[0].get_text().split(':')
+                    ans.append(':'.join([ip_port[0], ip_port[1]]))
+            except Exception:
+                print(Exception.__name__)
 
         return ans
 
@@ -69,6 +75,7 @@ class KuaidailiSpider(metaclass=SpiderGen):
     start_url = 'http://www.kuaidaili.com/free/inha/{}/'
 
     def gets(self, page_total=2):
+        print('kuaidaili crawl is working')
         urls = [self.start_url.format(i)
                 for i in range(self.count, self.count + page_total)]
         self._plus(page_total)
