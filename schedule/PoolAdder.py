@@ -30,7 +30,7 @@ class PoolAdder(object):
             print(raw_proxies)
             self.proxy_tester.set_arg(raw_proxies)
             self.proxy_tester.tester()
-            proxies = self.proxy_tester.usable_proxies
+            proxies = self.proxy_tester.get_usable_proxies
 
             if len(proxies) != 0:
                 self.redis_operator.puts(proxies)
