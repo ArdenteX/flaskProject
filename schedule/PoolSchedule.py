@@ -18,7 +18,7 @@ class ExpireCheckProcess(Process):
         redis_pool = RedisOperator()
         while True:
             time.sleep(self.cycle)
-            total = int(0.25*len(redis_pool.size))
+            total = int(0.25*redis_pool.size)
             if total < 4:
                 continue
 

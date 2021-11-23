@@ -5,8 +5,8 @@ from app import app
 
 
 def run_server():
-    process1 = ExpireCheckProcess(VALID_CHECK_CYCLE)
-    process2 = ProxiesCountProcess(POOL_LEN_CHECK_CYCLE)
+    process1 = ProxiesCountProcess(POOL_LEN_CHECK_CYCLE)
+    process2 = ExpireCheckProcess(VALID_CHECK_CYCLE)
     process1.start()
     process2.start()
     process1.join()

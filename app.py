@@ -1,6 +1,7 @@
 from flask import Flask, g
 from proxyPool.redisOperation import RedisOperator
 
+__all__ = ['app']
 app = Flask(__name__)
 
 
@@ -35,3 +36,4 @@ def get_counts():
 
 if __name__ == '__main__':
     app.run()
+
