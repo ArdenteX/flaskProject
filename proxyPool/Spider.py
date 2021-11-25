@@ -38,7 +38,7 @@ class Daili666Spider(metaclass=SpiderGen):
         for url in urls:
             soup = get_page(url)
             # 防止被 Ban, 加 1s 的间隔。
-            time.sleep(1)
+            time.sleep(3)
             proxy_list = soup.find('table', {"border": "2px"})
             for proxy in proxy_list.find_all('tr')[1:]:
                 ip = proxy.find_all('td')[0].get_text()
@@ -57,7 +57,7 @@ class XiLaProxySpider(metaclass=SpiderGen):
         ans = []
         for url in urls:
             try:
-                time.sleep(1)
+                time.sleep(3)
                 soup = get_page(url)
                 proxy_list = soup.find('table', {"class": 'fl-table'}).find('tbody')
 
@@ -82,7 +82,7 @@ class KuaidailiSpider(metaclass=SpiderGen):
         ans = []
         for url in urls:
             soup = get_page(url)
-            time.sleep(1)
+            time.sleep(5)
             proxy_list = soup.find('table',
                                    {'class': 'table table-bordered table-striped'}) \
                 .find('tbody')

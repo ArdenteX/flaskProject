@@ -1,7 +1,7 @@
 import asyncio
 import aiohttp
 
-test_api = 'https://www.baidu.com'
+test_api = 'http://httpbin.org/ip'
 
 
 class UsabilityTester(object):
@@ -16,13 +16,21 @@ class UsabilityTester(object):
     async def _test_single_proxy(self, proxy):
         async with aiohttp.ClientSession() as session:
             real_proxy = 'http://' + proxy
-            error_count = 0
+            real_ip = 'http://' + str(proxy).split(":")[0]
             try:
                 async with session.get(url=test_api, proxy=real_proxy, timeout=15) as resp:
-                    self._usable_proxies.append(real_proxy)
+                    json = await resp.json()
+                    print("response's ip:", str(json['origin']))
+                    print("real proxy ip: ", real_proxy)
+                    print("type of json, ", type(json['origin']))
+                    splicing_origin = 'http://' + str(json['origin'])
+                    print("ip after splice: ", splicing_origin)
+                    if splicing_origin == real_ip:
+                        print("This ip is high hide proxy!")
+                        self._usable_proxies.append(real_proxy)
+
             except Exception:
-                error_count += 1
-                print(real_proxy, 'unusable... ', Exception.__name__, " ... ", error_count)
+                print(real_proxy, 'unusable... ', Exception.__name__, " ... ")
 
     def tester(self):
         print("Tester is working")
